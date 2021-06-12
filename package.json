@@ -1,22 +1,28 @@
 {
   "name": "freetube",
+<<<<<<< HEAD
   "productName": "FreeTube",
   "description": "A private YouTube client",
   "version": "0.18.0",
+=======
+  "productName": "FreeTube-BenTube",
+  "description": "Ben's fork of the private YouTube client, FreeTube",
+  "version": "0.17.1-BenTube",
+>>>>>>> 1ab549ca (Blocked channels)
   "license": "AGPL-3.0-or-later",
   "main": "./dist/main.js",
   "private": true,
   "author": {
-    "name": "PrestonN",
-    "email": "FreeTubeApp@protonmail.com",
-    "url": "https://github.com/FreeTubeApp/FreeTube"
+    "name": "Ben",
+    "email": "benleibowitz2013@gmail.com",
+    "url": "https://github.com/bleibowitz/FreeTube"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FreeTubeApp/FreeTube.git"
+    "url": "git+https://github.com/bleibowitz/FreeTube.git"
   },
   "bugs": {
-    "url": "https://github.com/FreeTubeApp/FreeTube/issues"
+    "url": "https://github.com/bleibowitz/FreeTube/issues"
   },
   "scripts": {
     "build": "run-s rebuild:electron pack build-release",

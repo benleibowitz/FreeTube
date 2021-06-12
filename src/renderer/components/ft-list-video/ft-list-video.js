@@ -66,7 +66,21 @@ export default Vue.extend({
       isFavorited: false,
       isUpcoming: false,
       isPremium: false,
-      hideViews: false
+      hideViews: false,
+      optionsValues: [
+        'history',
+        'openYoutube',
+        'copyYoutube',
+        'openYoutubeEmbed',
+        'copyYoutubeEmbed',
+        'openInvidious',
+        'copyInvidious',
+        'openYoutubeChannel',
+        'copyYoutubeChannel',
+        'openInvidiousChannel',
+        'copyInvidiousChannel',
+        'blockChannelName'
+      ]
     }
   },
   computed: {
@@ -191,6 +205,13 @@ export default Vue.extend({
           {
             label: this.$t('Video.Open Channel in Invidious'),
             value: 'openInvidiousChannel'
+          },
+          {
+            type: 'divider'
+          },
+          {
+            label: this.$t('Video.Block Videos from this Channel'),
+            value: 'blockChannelName'
           }
         )
       }
@@ -297,6 +318,9 @@ export default Vue.extend({
 
     handleOptionsClick: function (option) {
       switch (option) {
+        case 'blockChannelName':
+          this.blockChannelName()
+          break
         case 'history':
           if (this.watched) {
             this.removeFromWatched()
@@ -457,6 +481,15 @@ export default Vue.extend({
       this.watched = true
     },
 
+    blockChannelName: function () {
+      let bcn = this.$store.getters.getBlockedChannelNames.split(',')
+      bcn.push(this.channelName)
+      this.$store.commit('setBlockedChannelNames', bcn.join(','))
+      this.showToast({
+        message: this.$t('Channel.Channel has been added to your blocked list')
+      })
+    },
+
     removeFromWatched: function () {
       this.removeFromHistory(this.id)
 
@@ -506,6 +539,7 @@ export default Vue.extend({
     ...mapActions([
       'openInExternalPlayer',
       'updateHistory',
+      'blockChannel',
       'removeFromHistory',
       'addVideo',
       'removeVideo'

@@ -7,6 +7,38 @@ import FtElementList from '../../components/ft-element-list/ft-element-list.vue'
 import { calculateLengthInSeconds } from '@freetube/yt-trending-scraper/src/HtmlParser'
 import { copyToClipboard, showToast } from '../../helpers/utils'
 
+function isItemInBlockedChannels(item, blockedChannelNames) {
+  if (item.type === 'channel') {
+    let channelName = item.name
+    if (channelName == null) {
+      channelName = item.author
+    }
+    channelName = channelName.trim()
+
+    let blocked = blockedChannelNames.indexOf(channelName) > -1
+    if (blocked) {
+      console.log('Blocking channel: ' + channelName)
+    }
+
+    return blocked
+  } else if (item.type === 'video') {
+    let channelName = item.author.name
+    if (channelName == null) {
+      channelName = item.author
+    }
+    channelName = channelName.trim()
+
+    let blocked = blockedChannelNames.indexOf(channelName) > -1
+    if (blocked) {
+      console.log('Blocking video: ' + item.title)
+    }
+
+    return blocked
+  }
+
+  return false
+}
+
 export default Vue.extend({
   name: 'Search',
   components: {
@@ -45,6 +77,9 @@ export default Vue.extend({
     },
     showFamilyFriendlyOnly: function() {
       return this.$store.getters.getShowFamilyFriendlyOnly
+    },
+    blockedChannelNames: function () {
+      return this.$store.getters.getBlockedChannelNames
     }
   },
   watch: {
@@ -135,9 +170,16 @@ export default Vue.extend({
 
         this.amountOfResults = result.results
 
+        let blockedChannelNames = this.blockedChannelNames.split(',')
+        for (let i = 0; i < blockedChannelNames.length; i++) {
+          blockedChannelNames[i] = blockedChannelNames[i].trim()
+        }
+
         const returnData = result.items.filter((item) => {
           if (typeof item !== 'undefined') {
-            return item.type === 'video' || item.type === 'channel' || item.type === 'playlist'
+            if (item.type === 'video' || item.type === 'channel' || item.type === 'playlist') {
+              return !isItemInBlockedChannels(item, blockedChannelNames)
+            }
           }
 
           return null
@@ -237,8 +279,21 @@ export default Vue.extend({
 
         this.apiUsed = 'invidious'
 
+        console.log(result)
+
+        let blockedChannelNames = this.blockedChannelNames.split(',')
+        for (let i = 0; i < blockedChannelNames.length; i++) {
+          blockedChannelNames[i] = blockedChannelNames[i].trim()
+        }
+
         const returnData = result.filter((item) => {
-          return item.type === 'video' || item.type === 'channel' || item.type === 'playlist'
+          if (typeof item !== 'undefined') {
+            if (item.type === 'video' || item.type === 'channel' || item.type === 'playlist') {
+              return !isItemInBlockedChannels(item, blockedChannelNames)
+            }
+          }
+
+          return null
         })
 
         if (this.searchPage !== 1) {

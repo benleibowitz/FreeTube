@@ -53,6 +53,10 @@ export default Vue.extend({
       return this.$store.getters.getUseRssFeeds
     },
 
+    blockedChannelNames: function () {
+      return this.$store.getters.getBlockedChannelNames
+    },
+
     profileList: function () {
       return this.$store.getters.getProfileList
     },
