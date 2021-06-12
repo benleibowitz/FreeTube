@@ -165,6 +165,7 @@ const state = {
   backendFallback: true,
   backendPreference: 'local',
   barColor: false,
+  blockedChannelNames: '',
   checkForBlogPosts: true,
   checkForUpdates: true,
   baseTheme: 'system',

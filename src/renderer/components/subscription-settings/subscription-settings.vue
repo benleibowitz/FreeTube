@@ -18,6 +18,13 @@
         :tooltip="$t('Tooltips.Subscription Settings.Fetch Feeds from RSS')"
         @change="updateUseRssFeeds"
       />
+      <ft-input
+        placeholder="Blocked Channel Names (comma-separated)"
+        :show-arrow="false"
+        :show-label="true"
+        :value="blockedChannelNames"
+        @input="handleUpdateBlockedChannelNames"
+      />
     </ft-flex-box>
     <br>
     <ft-flex-box>

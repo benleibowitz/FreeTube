@@ -5,6 +5,7 @@ import FtToggleSwitch from '../ft-toggle-switch/ft-toggle-switch.vue'
 import FtButton from '../ft-button/ft-button.vue'
 import FtSelect from '../ft-select/ft-select.vue'
 import FtFlexBox from '../ft-flex-box/ft-flex-box.vue'
+import FtInput from '../ft-input/ft-input.vue'
 
 export default Vue.extend({
   name: 'SubscriptionSettings',
@@ -13,7 +14,8 @@ export default Vue.extend({
     'ft-toggle-switch': FtToggleSwitch,
     'ft-button': FtButton,
     'ft-select': FtSelect,
-    'ft-flex-box': FtFlexBox
+    'ft-flex-box': FtFlexBox,
+    'ft-input': FtInput
   },
   data: function () {
     return {
@@ -34,12 +36,20 @@ export default Vue.extend({
     },
     useRssFeeds: function () {
       return this.$store.getters.getUseRssFeeds
+    },
+    blockedChannelNames: function () {
+      return this.$store.getters.getBlockedChannelNames
     }
   },
   methods: {
+    handleUpdateBlockedChannelNames: function (value) {
+      this.updateBlockedChannelNames(value)
+    },
+
     ...mapActions([
       'updateHideWatchedSubs',
-      'updateUseRssFeeds'
+      'updateUseRssFeeds',
+      'updateBlockedChannelNames'
     ])
   }
 })
