@@ -17,7 +17,7 @@ function isItemInBlockedChannels(item, blockedChannelNames) {
 
     let blocked = blockedChannelNames.indexOf(channelName) > -1
     if (blocked) {
-      console.log('Blocking channel: ' + channelName)
+      console.log('Blocking channel: [' + channelName + ']')
     }
 
     return blocked
@@ -30,7 +30,7 @@ function isItemInBlockedChannels(item, blockedChannelNames) {
 
     let blocked = blockedChannelNames.indexOf(channelName) > -1
     if (blocked) {
-      console.log('Blocking video: ' + item.title)
+      console.log('Blocking video: [' + item.title + '], author: [' + item.author.name + ']')
     }
 
     return blocked

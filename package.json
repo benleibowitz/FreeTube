@@ -1,14 +1,8 @@
 {
   "name": "freetube",
-<<<<<<< HEAD
-  "productName": "FreeTube",
-  "description": "A private YouTube client",
-  "version": "0.18.0",
-=======
   "productName": "FreeTube-BenTube",
   "description": "Ben's fork of the private YouTube client, FreeTube",
-  "version": "0.17.1-BenTube",
->>>>>>> 1ab549ca (Blocked channels)
+  "version": "0.18.1-BenTube",
   "license": "AGPL-3.0-or-later",
   "main": "./dist/main.js",
   "private": true,
@@ -73,6 +67,7 @@
     "process": "^0.11.10",
     "socks-proxy-agent": "^6.0.0",
     "video.js": "7.18.1",
+    "videojs-abloop": "^1.2.0",
     "videojs-contrib-quality-levels": "^2.1.0",
     "videojs-http-source-selector": "^1.1.6",
     "videojs-mobile-ui": "^0.8.0",
