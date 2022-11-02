@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import FtIconButton from '../ft-icon-button/ft-icon-button.vue'
+import ClickbaitClassifier from '../../store/modules/clickbait-classifier'
 import { mapActions } from 'vuex'
 
 export default Vue.extend({
@@ -72,7 +73,8 @@ export default Vue.extend({
         'copyYoutubeChannel',
         'openInvidiousChannel',
         'copyInvidiousChannel',
-        'blockChannelName'
+        'blockChannelName',
+        'trainAsClickbait'
       ]
     }
   },
@@ -205,6 +207,10 @@ export default Vue.extend({
           {
             label: this.$t('Video.Block Videos from this Channel'),
             value: 'blockChannelName'
+          },
+          {
+            label: this.$t('Video.Train as Clickbait'),
+            value: 'trainAsClickbait'
           }
         )
       }
@@ -275,6 +281,7 @@ export default Vue.extend({
   mounted: function () {
     this.parseVideoData()
     this.checkIfWatched()
+    this.checkIfClickbait()
   },
   methods: {
     handleExternalPlayer: function () {
@@ -313,6 +320,9 @@ export default Vue.extend({
       switch (option) {
         case 'blockChannelName':
           this.blockChannelName()
+          break
+        case 'trainAsClickbait':
+          this.trainAsClickbait()
           break
         case 'history':
           if (this.watched) {
@@ -475,6 +485,11 @@ export default Vue.extend({
       }
     },
 
+    checkIfClickbait: function () {
+      console.log('Classifying clickbait: ')
+      console.log(ClickbaitClassifier.isClickbait(this.title))
+    },
+
     markAsWatched: function () {
       const videoData = {
         videoId: this.id,
@@ -506,6 +521,10 @@ export default Vue.extend({
       this.showToast({
         message: this.$t('Channel.Channel has been added to your blocked list')
       })
+    },
+
+    trainAsClickbait: function () {
+      ClickbaitClassifier.trainClickbait(this.title)
     },
 
     removeFromWatched: function () {

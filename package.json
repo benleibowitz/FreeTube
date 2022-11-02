@@ -82,7 +82,8 @@
     "yt-trending-scraper": "^2.0.1",
     "ytdl-core": "^4.11.0",
     "ytpl": "^2.3.0",
-    "ytsr": "^3.8.0"
+    "ytsr": "^3.8.0",
+    "natural": "^5.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.17.10",

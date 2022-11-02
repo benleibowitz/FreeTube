@@ -14,6 +14,7 @@ import WatchVideoLiveChat from '../../components/watch-video-live-chat/watch-vid
 import WatchVideoPlaylist from '../../components/watch-video-playlist/watch-video-playlist.vue'
 import WatchVideoRecommendations from '../../components/watch-video-recommendations/watch-video-recommendations.vue'
 import FtAgeRestricted from '../../components/ft-age-restricted/ft-age-restricted.vue'
+import ClickbaitClassifier from '../../store/modules/clickbait-classifier'
 
 export default Vue.extend({
   name: 'Watch',
@@ -272,6 +273,8 @@ export default Vue.extend({
           }
 
           this.videoTitle = result.videoDetails.title
+          ClickbaitClassifier.trainNotClickbait(this.videoTitle)
+
           this.videoViewCount = parseInt(
             result.player_response.videoDetails.viewCount,
             10
@@ -565,6 +568,8 @@ export default Vue.extend({
           }
 
           this.videoTitle = result.title
+          ClickbaitClassifier.trainNotClickbait(this.videoTitle)
+
           this.videoViewCount = result.viewCount
           if (this.hideVideoLikesAndDislikes) {
             this.videoLikeCount = null
@@ -751,6 +756,10 @@ export default Vue.extend({
       }
 
       this.updateHistory(videoData)
+    },
+
+    trainClickbaitClassifier: function () {
+      ClickbaitClassifier.trainNotClickbait(this.title)
     },
 
     handleWatchProgress: function () {

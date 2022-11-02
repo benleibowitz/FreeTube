@@ -202,6 +202,7 @@ const state = {
   hideRecommendedVideos: false,
   hideSearchBar: false,
   hideSharingActions: false,
+  hideShorts: false,
   hideTrendingVideos: false,
   hideUnsubscribeButton: false,
   hideVideoLikesAndDislikes: false,

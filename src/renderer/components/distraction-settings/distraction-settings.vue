@@ -94,6 +94,12 @@
           :default-value="hideComments"
           @change="updateHideComments"
         />
+        <ft-toggle-switch
+          :label="$t('Settings.Distraction Free Settings.Hide Shorts')"
+          :compact="true"
+          :default-value="hideShorts"
+          @change="updateHideShorts"
+        />
       </div>
     </div>
     <br>

@@ -38,6 +38,19 @@ function isItemInBlockedChannels(item, blockedChannelNames) {
   return false
 }
 
+function isShort(item) {
+  if (typeof item !== 'undefined' && item.type === 'video') {
+    if (item.title.toLowerCase().indexOf('#short') >= 0) {
+      console.log('Filtering short: ' + item.title)
+      return true
+    } else if (item.lengthSeconds <= 60) {
+      console.log('Filtering short: ' + item.title)
+      return true
+    }
+  }
+  return false
+}
+
 export default Vue.extend({
   name: 'Search',
   components: {
@@ -77,8 +90,11 @@ export default Vue.extend({
     showFamilyFriendlyOnly: function() {
       return this.$store.getters.getShowFamilyFriendlyOnly
     },
-    blockedChannelNames: function () {
+    blockedChannelNames: function() {
       return this.$store.getters.getBlockedChannelNames
+    },
+    hideShorts: function() {
+      return this.$store.getters.getHideShorts
     }
   },
   watch: {
@@ -186,6 +202,12 @@ export default Vue.extend({
           }
 
           return null
+        })
+        .filter((item) => {
+          if (this.hideShorts) {
+            return !isShort(item)
+          }
+          return true
         })
 
         const dataToShow = []
@@ -304,6 +326,11 @@ export default Vue.extend({
           }
 
           return null
+        }).filter((item) => {
+          if (this.hideShorts) {
+            return !isShort(item)
+          }
+          return true
         })
 
         console.log(returnData)
